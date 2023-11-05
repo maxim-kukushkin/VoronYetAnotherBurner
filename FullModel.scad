@@ -71,17 +71,6 @@ translate(right_blower_location())
     rotate([90, 0, -90])
         blower(RB5015);
 
-/*
-translate([
-    right_blower_location().x - blower_depth(RB5015),
-    right_blower_location().y - blower_axis(RB5015).x,
-    right_blower_location().z + blower_axis(RB5015).y
-    ])
-        rotate([90, -45, 90])
-            translate([-blower_axis(RB5015).x, -blower_axis(RB5015).y])
-                blower(RB5015);
-        */
-
 translate(HE_fan_location())
     rotate([-90, 0, 0])
         fan(fan40x11);
