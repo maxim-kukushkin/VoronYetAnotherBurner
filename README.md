@@ -5,13 +5,13 @@
 # Description
 
 ![Full assembly render](readme_data/FullToolheadRender.png)
-![Toolhead photo](readme_data/ToolheadPhoto.jpg)
-![Toolhead photo (dark)](readme_data/ToolheadPhoto_dark.jpg)
 
 YetAnotherBurner is (as the name suggests) yet another attempt to design a toolhead for Voron Trident (and 2.4) 3D printers. The main concern the author had about the existing solutions are:
 - Usage of custom extruders
 - Lack of attention to the part cooling (making it impossible to print PLA overhangs with the printer doors closed)
 - Lack of LEDs or Trident support in some of the alternative projects
+
+![Toolhead photo (dark)](readme_data/ToolheadPhoto_dark.jpg)
 
 The features of this solution are:
 - Strong part cooling (using 2x 5015 blower fans)
@@ -20,6 +20,8 @@ The features of this solution are:
 - Easy loading of the filament + good grip of the bowden tube (by the extruder itself)
 - Support of the toolhead breakout PCB (same PCBs as used in Stealthburner)
 - Support of ADXL345 accelerometer mounting
+
+![Toolhead photo](readme_data/ToolheadPhoto.jpg)
 
 The toolhead uses BondTech LGX Lite extruder and currently only support Dragon High Flow hotend. It is also based on Stealhburner's X Frame mounts (so migration from Stealthburner should be more or less straightforward).
 
