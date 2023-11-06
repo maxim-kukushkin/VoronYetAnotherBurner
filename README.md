@@ -1,5 +1,6 @@
 **This is a work-in-progress project**
-**The complete readme with printing/assembly instructions and BOM is coming**
+
+**The complete readme with printing/assembly instructions and BOM are coming**
 
 
 # Description
