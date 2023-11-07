@@ -33,8 +33,8 @@
 - 2x M4x6x4
 
 ### Other
-- PTFE tube (~2cm, to use between the extruder and the hotend)
-- Bowden tube (to guide the filament into the extruder
+- PTFE tube ~30mm length (better to have some extra), 4mm outer diameter, ~1.8mm inner diameter (to use between the extruder and the hotend)
+- Bowden tube (to guide the filament into the extruder)
 - 3x awg 26-30 wires, preferably different colors, ~50cm each (better to have some extra) (for LEDs)
 - Molex Micro-Fit 3.0 male (this is what LDO kits use, it may vary based on when LED connector is already being used in the printer)
 - (optional) 3x JST-XH 2-pin connectors (to shorten fan wires and ensure better cablework)
