@@ -157,17 +157,4 @@ module _right_blower_intake() {
         axis_z + right_blower_intake_w() / 2 + 1
     ])
         uncentered_box([-wall - 2 * eps, length, -pcb_bracket_backplate_h()]);
-    /*
-    translate([width / 2, -cover_split_offset() - eps, axis_z])
-        rotate([-90, 90, 0])
-            linear_extrude(height = length)
-                circular_cut(right_blower_intake_w(), right_blower_intake_depth());
-
-    translate([
-        width / 2 + eps,
-        right_blower_location().y - top_cover_location().y - blower_axis_y_offset(),
-        axis_z])
-        rotate([0, -90, 0])
-            cylinder(d = right_blower_intake_w() + 2, h = wall + 2 * eps);
-    */
 }

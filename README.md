@@ -5,14 +5,14 @@
 
 # Description
 
-![Full assembly render](readme_data/FullToolheadRender.png)
+![Full assembly render](docs/resources/FullToolheadRender.png)
 
 YetAnotherBurner is (as the name suggests) yet another attempt to design a toolhead for Voron Trident (and 2.4) 3D printers. The main concern the author had about the existing solutions are:
 - Usage of custom extruders
 - Lack of attention to the part cooling (making it impossible to print PLA overhangs with the printer doors closed)
 - Lack of LEDs or Trident support in some of the alternative projects
 
-![Toolhead photo (dark)](readme_data/ToolheadPhoto_dark.jpg)
+![Toolhead photo (dark)](docs/resources/ToolheadPhoto_dark.jpg)
 
 The features of this solution are:
 - Strong part cooling (using 2x 5015 blower fans)
@@ -22,10 +22,13 @@ The features of this solution are:
 - Support of the toolhead breakout PCB (same PCBs as used in Stealthburner)
 - Support of ADXL345 accelerometer mounting
 
-![Toolhead photo](readme_data/ToolheadPhoto.jpg)
+![Toolhead photo](docs/resources/ToolheadPhoto.jpg)
 
-The toolhead uses BondTech LGX Lite extruder and currently only support Dragon High Flow hotend. It is also based on Stealhburner's X Frame mounts (so migration from Stealthburner should be more or less straightforward).
+The toolhead uses BondTech LGX Lite extruder and currently only supports Dragon High Flow hotend. It is also based on Stealhburner's X Frame mounts (so migration from Stealthburner should be more or less straightforward).
 
 ### Known drawbacks
-- Due to the size of the toolhead along X-axis there's a limit on the toolhead travel in the front corners (Y=0) of the printer. Y-axis for example needs to be homed first in case the toolhead is position around Y=0
-- As of the time of writing no support of alternative toolheads or accelerometers
+- Due to the size of the toolhead along X-axis there's a limit on the toolhead's travel in the front corners (Y=0) of the printer. Y-axis, for example, needs to be homed first in case the toolhead is positioned around Y=0
+- As of the time of writing no support of alternative hotends or accelerometers
+
+## BOM
+See the [BOM document](docs/BOM.md)
