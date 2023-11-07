@@ -3,7 +3,8 @@
 ### Devices
 - Dragon High Flow hotend
 - BondTech LGX Lite extruder
-- 2x 5015 blower fans
+- 2x 5015 blower fans (24V, but check your printer's voltage!)
+- 1x 4010 fan (24V, but check your printer's voltage!)
 - 6x ws2812b RGB LEDs
 - (optional) ADXL345 accelerometer
 - (optional, but recommended) LDO toolhead breakout PCB
@@ -36,10 +37,11 @@
 - Bowden tube (to guide the filament into the extruder
 - 3x awg 26-30 wires, preferably different colors, ~50cm each (better to have some extra) (for LEDs)
 - Molex Micro-Fit 3.0 male (this is what LDO kits use, it may vary based on when LED connector is already being used in the printer)
+- (optional) 3x JST-XH 2-pin connectors (to shorten fan wires and ensure better cablework)
 
 ### Tools
 - Soldering iron + solder
 - PETG filament (normal color, accent color and transparent filament). Option to use ABS, but it hasn't been tested with the STLs/models included in this repo
 - (optional) soldering iron adaptor for heatset inserts
-- A crimping tool would come in handy when working with the Molex Micro-Fit connector
+- A crimping tool would come in handy when working with the connectors
 - A screwdriver for M2, M2.5, M3 and M4 allen keys
