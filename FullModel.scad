@@ -206,6 +206,20 @@ color(screw_color) {
                 translate([hotend_screw_offset(), 0, HE_cartridge_screw_h()])
                     m2_5_screw(16);
 
+    // Extruder to extruder bracket screws
+    translate(extruder_mount_location())
+        for_each_extruder_mount_screw_pos()
+            rotate([180, 0, 0])
+                m3_screw(12);
+
+    // Cooling duct mount
+    for (i = [0, 1])
+        mirror([i, 0, 0])
+            translate(cooling_duct_location())
+                cooling_duct_for_each_screw_pos()
+                    rotate([0, 90, 0])
+                        m3_screw(6);
+
     /*
     for (i = [-1, 1])
         translate([

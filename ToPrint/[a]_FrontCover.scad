@@ -198,16 +198,6 @@ module _top_screw_cuts() {
             rotate([90, 0, 0])
                 cylinder(d = m3_screw_cap_d(), h = total_depth);
     }
-/*
-    for (i = [1, -1])
-        translate([
-            i * cover_join_screw_dist() / 2,
-            -total_depth,
-            cover_top_plate_thickness() -cover_front_mount_screw_offset()])
-            rotate([-90, 0, 0]) {
-                cylinder(d = m3_screw_cap_d(), h = 9);
-            }
-*/
 }
 
 

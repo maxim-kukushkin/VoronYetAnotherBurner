@@ -39,7 +39,7 @@ module ExtruderMount() {
         difference() {
             _motor_mount_main_body();
             
-            _motor_screw_caps();
+            _extruder_screw_caps();
             _pcb_bracket_mount_cuts();
             _wire_channel();
         }
@@ -76,24 +76,21 @@ module _motor_mount_main_body() {
             // Filament shaft
             circle(d = PTFE_shaft_cut_d());
             
-            for (i = [-1, 1]) {
-                // motor mounting holes
-                for (y_o = [mounting_screw_to_hole_w_offset1(), mounting_screw_to_hole_w_offset2()])
-                    translate([i * mounting_screw_to_hole_l_offset(), -y_o])
+            // Extruder mounting holes
+            _for_each_extruder_mount_screw_2d_pos() 
                         circle(d = m3_screw_d());
-                
-                // mounting loop screw holes
+           
+            // mounting loop screw holes
+            for (i = [-1, 1])
                 translate([i * extruder_mount_screw_dist() / 2, -extruder_mount_screw_y_offset()])
                     circle(d = m3_screw_d());
-            }
         }
 }
 
-module _motor_screw_caps() {
-    for (i = [-1, 1])
-        for (y_o = [mounting_screw_to_hole_w_offset1(), mounting_screw_to_hole_w_offset2()])
-            translate([i * mounting_screw_to_hole_l_offset(), -y_o, -eps])
-                cylinder(d = m3_screw_cap_d(), h = m3_cap_h() + 0.5 + eps);       
+module _extruder_screw_caps() {
+    for_each_extruder_mount_screw_pos()
+        rotate([180, 0, 0])
+            cylinder(d = m3_screw_cap_d(), h = extruder_mount_h()); 
 }
 
 module _pcb_bracket_mount_cuts() {
@@ -119,4 +116,17 @@ module _wire_fixers() {
         for(i = [-1, 1], j = [-1, 1])
             translate([i * wire_ch_w / 2, j * (extruder_mount_w() / 2 - sphere_r), 0])
                 sphere(r = sphere_r, $fn=20);
+}
+
+module _for_each_extruder_mount_screw_2d_pos() {
+    for (i = [-1, 1])
+        for (y_o = [mounting_screw_to_hole_w_offset1(), mounting_screw_to_hole_w_offset2()])
+            translate([i * mounting_screw_to_hole_l_offset(), -y_o])
+                children();
+}
+
+module for_each_extruder_mount_screw_pos() {
+    _for_each_extruder_mount_screw_2d_pos()
+        translate([0, 0, m3_cap_h() + 0.5])
+            children();
 }

@@ -132,14 +132,6 @@ module _vent() {
 
 //!_vent_pipe();
 module _vent_pipe(size_diff = 0, len_oversize = 0) {
-    /* V1
-    hot_end_offset_x = 18;
-    hot_end_offset_z = 6;
-    angle = 40;
-    duct_bottom_l = 9;
-    duct_bottom_w = 4;
-    */
-
     hot_end_offset_x = 18;
     hot_end_offset_z = 5;
     angle = 43;
@@ -166,4 +158,10 @@ module _vent_pipe(size_diff = 0, len_oversize = 0) {
         squarev([shaft_inner_w + size_diff, shaft_inner_l + size_diff]),
         squarev([duct_bottom_w + size_diff * 0.5, duct_bottom_l + size_diff * 0.5]),
         preRotate=true);
+}
+
+module cooling_duct_for_each_screw_pos() {
+    for (i = [-1, 1])
+        translate([mount_loop_h, i * cooling_duct_mount_screw_offset_y(), -cooling_duct_mount_screw_offset_z()])
+            children();
 }
