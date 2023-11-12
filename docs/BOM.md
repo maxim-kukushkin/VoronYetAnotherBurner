@@ -11,9 +11,7 @@
 
 ### Screws (allen cap head)
 - 2x M2x6
-
 - 4x M2.5x16
-
 - 6x M3x6
 - 4x M3x8
 - 6x M3x12
@@ -21,7 +19,6 @@
 - 6x M3x20
 - 2x M3x30
 - 2x M3x50
-
 - 2x M4x20
 
 ### Washers

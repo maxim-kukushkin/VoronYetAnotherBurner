@@ -146,6 +146,7 @@ module _front_panel() {
                             cover_rounded_profile(width, side_rounding);
                     }
 
+            echo (front_wall);
             // motor window
             translate([0, eps, -(motor_offset - front_inner_rounding)])
                 rotate([90, 0, 0])
@@ -159,13 +160,11 @@ module _front_panel() {
 }
 
 module _bottom_mounting_screws() {
-    translate([0, -total_depth - eps, -fan_offset])
-        for (i= [-1, 1])
-            translate([i * cooling_fan_screw_dist() / 2, 0, -cooling_fan_screw_dist() / 2])
-                rotate([-90, 0, 0]) {
-                    cylinder(d = m3_screw_d(), h = front_wall + 2 * eps);
-                    cylinder(d = m3_screw_cap_d(), h = eps + m3_cap_h());
-                }
+    front_cover_for_each_bottom_screw_pos()
+        rotate([-90, 0, 0]) {
+            cylinder(d = m3_screw_d(), h = front_wall + 2 * eps);
+            cylinder(d = m3_screw_cap_d(), h = eps + m3_cap_h());
+        }
 }
 
 module _top_screw_shafts() {
@@ -192,15 +191,23 @@ module _top_screw_shafts() {
 }
 
 module _top_screw_cuts() {
+    front_cover_for_each_top_screw_pos() {
+        rotate([-90, 0, 0])
+            cylinder(d = m3_screw_d(), h = total_depth);
+        translate([0, eps, 0])
+            rotate([90, 0, 0])
+                cylinder(d = m3_screw_cap_d(), h = total_depth);
+    }
+/*
     for (i = [1, -1])
         translate([
             i * cover_join_screw_dist() / 2,
             -total_depth,
             cover_top_plate_thickness() -cover_front_mount_screw_offset()])
             rotate([-90, 0, 0]) {
-                cylinder(d = m3_screw_d(), h = total_depth + eps);
                 cylinder(d = m3_screw_cap_d(), h = 9);
             }
+*/
 }
 
 
@@ -213,12 +220,6 @@ module _motor_led_holders() {
                         _led_holder();
 }
 
-/*
-!union() {
-    _led_holder(1);
-    uncentered_box([-4.5, 12, 1], centerY=true);
-}
-*/
 module _led_holder(extra_h = 0) {
     wall = 1.2;
     inner_l = ws2812b_pcb_h() + ws2812b_components_h() + 0.1;
@@ -328,15 +329,6 @@ module _led_wire_hole() {
 }
 
 module _right_blower_intake() {
-    /*
-    translate([
-        width / 2,
-        eps,
-        -pcb_bracket_backplate_h() - blower_fan_offset_z() + blower_axis_z_offset()])
-        rotate([90, -90, 0])
-            linear_extrude(height = 15)
-                circular_cut(right_blower_intake_w(), right_blower_intake_depth());
-    */
     axis_z = -pcb_bracket_backplate_h() - blower_fan_offset_z() + blower_axis_z_offset();
     d = right_blower_intake_w() + 2;
     translate([
@@ -348,4 +340,21 @@ module _right_blower_intake() {
 
     translate([width / 2 + eps, eps, axis_z])
         uncentered_box([-wall - 2 * eps, -abs(cartridge_front_y), -d]);
+}
+
+module front_cover_for_each_bottom_screw_pos() {
+    translate([0, -total_depth - eps, -fan_offset])
+        for (i= [-1, 1])
+            translate([i * cooling_fan_screw_dist() / 2, 0, -cooling_fan_screw_dist() / 2])
+                children();
+}
+
+module front_cover_for_each_top_screw_pos() {
+    for (i = [1, -1])
+        translate([
+            i * cover_join_screw_dist() / 2,
+            -total_depth + 9,
+            cover_top_plate_thickness() -cover_front_mount_screw_offset()
+        ])
+            children();
 }

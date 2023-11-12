@@ -40,6 +40,8 @@ $fa = 0.4;
 
 eps = 0.004;
 
+screw_color = "#333333";
+
 /******
 DEVICES
 ******/
@@ -87,7 +89,11 @@ translate(accelerometer_location())
 
 translate(extruder_location())
     translate([0, 0, extruder_body_height() - 1])
-        PTFE_tube();
+        PTFE_tube(30);
+
+translate(HE_location())
+    translate([0, 0, -hotend_ptfe_slot_depth()])
+        PTFE_tube(29.7);
         
 /*******
 Toolhead parts
@@ -134,39 +140,84 @@ translate(motor_window_insert_location())
 Screws
 *******/
 
-color("#333333")
-for (i = [-1, 1])
-    translate([i * top_holding_screw_dist() / 2, -HE_catridge_hook_thickness(), 0])
-        rotate([90, 0, 0])
-            m3_screw(6, for_hole_cutting = false);
+color(screw_color) {
+    $for_cutting = false;
+    // HE cartridge to X carriage (top)
+    for (i = [-1, 1])
+        translate([i * top_holding_screw_dist() / 2, -HE_catridge_hook_thickness(), 0])
+            rotate([90, 0, 0])
+                m3_screw(6);
 
-color("#333333")
-for (i = [-1, 1])
-    translate([
-        extruder_mount_location().x + i * extruder_mount_screw_dist() / 2,
-        extruder_mount_location().y - extruder_mount_screw_y_offset(),
-        extruder_location().z])
-        m3_screw(extruder_mount_h() + 5, for_hole_cutting = false, with_washer=true);
-
-color("#333333")
-for (i = [-1, 1])
-    translate([
+    // HE cartridge to X carriage (bottom)
+    for (i = [-1, 1])
+        translate([
             i * bottom_mount_screw_dist() / 2,
-            -46,
+            -HE_cartridge_depth() + m3_cap_h(),
             -bottom_mount_screw_z_offset()
         ])
-        rotate([90, 0, 0])
-            m3_screw(50, for_hole_cutting = false);
+            rotate([90, 0, 0])
+                m3_screw(50);
 
-color("#333333")
-for (i = [-1, 1])
-    translate([
-            i * top_mount_screw_dist() / 2,
-            0,
-            top_mount_screw_z_offset()
-        ])
-        rotate([90, 0, 0])
-            m3_screw(20, for_hole_cutting = false);
+    translate(HE_cartridge_front_location()) {
+        // HE cartridge front to back mounting
+        HE_cartridge_front_for_each_backmount_screw_pos()
+            translate([0, m3_cap_h(), 0])
+                rotate([90, 0, 0])
+                    m3_screw(30);
+
+        // HE fan mounting
+        HE_cartridge_front_for_each_fan_screw_pos(top_only = true)
+            translate([0, -10 + m3_cap_h(), 0])
+                rotate([90, 0, 0])
+                    m3_screw(12);
+
+        // Accelerometer mounting
+        for_each_accelerometer_screw_pos()
+            rotate([0, 90, 0])
+                translate([0, 0, accelerometer_h()])
+                    m2_screw(6);
+    }
+
+    translate(front_cover_location()) {
+        // Bottom mounting screws
+        front_cover_for_each_bottom_screw_pos()
+            translate([0, m3_cap_h(), 0])
+                rotate([90, 0, 0])
+                    m3_screw(20);
+
+        // Top mounting screws
+        front_cover_for_each_top_screw_pos()
+            rotate([90, 0, 0])
+                m3_screw(20);
+    }
+
+    // Extruder mount to HE cartridge
+    for (i = [-1, 1])
+        translate([
+            extruder_mount_location().x + i * extruder_mount_screw_dist() / 2,
+            extruder_mount_location().y - extruder_mount_screw_y_offset(),
+            extruder_location().z])
+            m3_screw(16, with_washer=true);
+
+    // Hotend screws
+    translate(HE_location())
+        for (i = [0:3])
+            rotate([0, 0, 45 + i * 90])
+                translate([hotend_screw_offset(), 0, HE_cartridge_screw_h()])
+                    m2_5_screw(16);
+
+    /*
+    for (i = [-1, 1])
+        translate([
+                i * top_mount_screw_dist() / 2,
+                0,
+                top_mount_screw_z_offset()
+            ])
+            rotate([90, 0, 0])
+                m3_screw(20);
+    */
+}
+
 
 /*******
 AUX
@@ -225,9 +276,9 @@ module accelerometer() {
         }
 }
 
-module PTFE_tube() {
+module PTFE_tube(l) {
     color("white")
-    linear_extrude(height = 30)
+    linear_extrude(height = l)
         difference() {
             circle(d = 4);
             circle(d = 1.9);

@@ -38,6 +38,7 @@ function HE_cartridge_fan_offset_z() = HE_cartridge_h() - HE_fan_to_bottom_offse
 fan_center_z = -HE_cartridge_fan_offset_z();
 
 depth = HE_cartridge_front_depth();
+
 front_part_depth = depth - (extruder_mount_w() - extruder_mount_shaft_offset()) - 4; 
 
 function front_part_h_diff() = (fan_center_z + fan_width(fan40x11) / 2);
@@ -160,9 +161,9 @@ module _vent_shaft() {
 }
 
 module _fan_mount_holes() {
-    translate([0, -depth - eps, fan_center_z])
-        rotate([-90, 0, 0])
-            fan_hole_positions(fan40x11, z=0)
+    HE_cartridge_front_for_each_fan_screw_pos()
+        translate([0, -eps, 0])
+            rotate([-90, 0, 0])
                 cylinder(d = m3_heat_insert_d(), h = 5 + eps);
 }
 
@@ -174,16 +175,11 @@ module _extruder_mount_holes() {
 }
 
 module _back_mount_screw_holes() {
-    for (i = [-1, 1])
-        translate([
-            i * HE_cartridge_common_screw_dist() / 2,
-            -depth - eps,
-            -HE_cartridge_common_screw_offset_z()
-        ])
-            rotate([-90, 0, 0]) {
-                cylinder(d = m3_screw_d(), h = depth + 2 * eps, $fn=30);
-                cylinder(d = m3_screw_cap_d(), h = m3_cap_h() - 0.3);
-            }
+    HE_cartridge_front_for_each_backmount_screw_pos()
+        rotate([-90, 0, 0]) {
+            cylinder(d = m3_screw_d(), h = depth + 2 * eps, $fn=30);
+            cylinder(d = m3_screw_cap_d(), h = m3_cap_h() - 0.3);
+        }
 }
 
 module _cooling_duct_mount_holes() {
@@ -255,8 +251,33 @@ module _wire_holder() {
 }
 
 module _accelerometer_mount_holes() {
+    for_each_accelerometer_screw_pos()
+        m2_insert_vertical_hole(0);
+}
+
+module HE_cartridge_front_for_each_fan_screw_pos(top_only = false, bottom_only = false) {
+    assert(!(top_only && bottom_only), "top_only and bottom_only flags are mutually exclusive");
+    pitch = fan_hole_pitch(fan40x11);
+    translate([0, -depth, fan_center_z])
+        for (x = [-1, 1])
+            for (z = top_only ? [1] : (bottom_only ? [-1] : [-1, 1]))
+                translate([x * pitch, 0, z * pitch])
+                    children();
+}
+
+module HE_cartridge_front_for_each_backmount_screw_pos() {
+    for (i = [-1, 1])
+        translate([
+            i * HE_cartridge_common_screw_dist() / 2,
+            -depth - eps,
+            -HE_cartridge_common_screw_offset_z()
+        ])
+            children();
+}
+
+module for_each_accelerometer_screw_pos() {
     translate([HE_cartridge_w() / 2, -accelerometer_center_offset_yz[0], -accelerometer_center_offset_yz[1]])
         for (i = [-1, 1])
             translate([0, 0, i * accelerometer_screw_dist() / 2])
-                m2_insert_vertical_hole(0);
+                children();
 }

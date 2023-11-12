@@ -95,7 +95,7 @@ module _mounting_loop() {
 
     screw_offset = cooling_duct_mount_screw_offset_y() - cooling_duct_mount_l() / 2;
 
-    side_width = m3_screw_cap_d(false) / 2 + 1;
+    side_width = m3_screw_cap_d() / 2 + 1;
 
     dots1 = BezierDots(
         [-cooling_duct_mount_screw_offset_z(), -eps],

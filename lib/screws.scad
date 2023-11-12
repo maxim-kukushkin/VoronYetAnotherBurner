@@ -17,10 +17,18 @@ eps = 0.004;
 m2_5_screw_d = [2.4, 2.9];
 // [cap diameter, cap hole diameter, washer_diameter]
 m2_5_screw_cap_d = [4.4, 4.7, 6.5];
+// [cap height, washer_height]
+m2_5_screw_cap_h = [2.4, 0.2];
+
+m2_screw_d = [1.94, 2.2];
+m2_screw_cap_d = [3.7, 4, 4.8];
+m2_screw_cap_h = [1.9, 0.3];
 
 m3_screw_d = [2.6, 3.5];
 m3_screw_cap_d = [5.2, 5.6, 7];
 m3_screw_cap_h = [3, 0.2];
+
+function _for_cutting() = is_undef($for_cutting) ? true : $for_cutting;
 
 function m2_5_screw_d(for_cutting = true) = m2_5_screw_d[for_cutting ? 1 : 0];
 function m3_screw_d(for_cutting = true) = m3_screw_d[for_cutting ? 1 : 0];
@@ -47,15 +55,23 @@ module mX_screw(cap_d, cap_h, screw_d, screw_l, washer_d = 0, washer_h = 0) {
         cylinder(d = screw_d, h = screw_l + eps);
 }
 
-module mX_screw_(length, cap_h, screw_sizes, cap_sizes, for_hole_cutting, with_washer) {
-    i = for_hole_cutting ? (with_washer ? 2 : 1) : 0;
+module mX_screw_(length, cap_h, screw_sizes, cap_sizes, with_washer) {
+    i = _for_cutting() ? 1 : 0;
     if (with_washer)
-        mX_screw(cap_sizes[i], cap_h[0], screw_sizes[i], length, cap_sizes[2], cap_h[1]);
+        mX_screw(cap_sizes[_for_cutting() ? 2 : 0], cap_h[0], screw_sizes[i], length, cap_sizes[2], cap_h[1]);
     else
         mX_screw(cap_sizes[i], cap_h[0], screw_sizes[i], length);
 }
 
-module m3_screw(length, for_hole_cutting = true, with_washer = false) {
-    mX_screw_(length, m3_screw_cap_h, m3_screw_d, m3_screw_cap_d, for_hole_cutting, with_washer);
+module m2_screw(length, with_washer = false) {
+    mX_screw_(length, m2_screw_cap_h, m2_screw_d, m2_screw_cap_d, with_washer);
+}
+
+module m3_screw(length, with_washer = false) {
+    mX_screw_(length, m3_screw_cap_h, m3_screw_d, m3_screw_cap_d, with_washer);
+}
+
+module m2_5_screw(length, with_washer = false) {
+    mX_screw_(length, m2_5_screw_cap_h, m2_5_screw_d, m2_5_screw_cap_d, with_washer);
 }
 

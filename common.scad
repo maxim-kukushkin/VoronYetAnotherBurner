@@ -22,7 +22,7 @@ use <lib/2d_shapes.scad>
 use <lib/screws.scad>
 use <lib/heat_inserts.scad>
 
-function extruder_mount_screw_offset() = m3_screw_cap_d(false) / 2 + 0.5;
+function extruder_mount_screw_offset() = m3_screw_cap_d() / 2 + 0.5;
 function extruder_mount_screw_dist() = extruder_body_length() + extruder_mount_screw_offset() * 2;
 
 function HE_cartridge_location() = [0, 0, -HE_cartridge_top_offset()];
@@ -58,7 +58,7 @@ function HE_cartridge_vent_h() = hotend_heatsink_h() - HE_cartridge_slot_h() - H
 function HE_cartridge_back_depth() = abs(HE_location().y);
 function HE_cartridge_front_depth() = HE_cartridge_depth() - HE_cartridge_back_depth();
 
-function HE_cartridge_common_screw_offset_z() = 5 + 2 + m3_screw_d(false) / 2;
+function HE_cartridge_common_screw_offset_z() = 5 + 2 + m3_screw_d($for_cutting = false) / 2;
 function HE_cartridge_common_screw_dist() =
     HE_cartridge_w() - m3_heat_insert_d() - 2 * heat_insert_min_offset() - 3;
 
@@ -88,7 +88,7 @@ function extruder_mount_w() =
     extruder_mount_side_wall() + PTFE_shaft_d() / 2 + mounting_screw_to_hole_w_offset2() + m3_washer_d() / 2 + extruder_mount_side_wall();
 function extruder_mount_location() =
     [HE_location().x, HE_location().y, HE_cartridge_location().z];
-function extruder_mount_loop_w() = m3_screw_d(false) + 2 * 1.5;
+function extruder_mount_loop_w() = m3_screw_d() + 2 * 1.5;
 function extruder_mount_vertical_cut_offset() = extruder_mount_loop_w() / 2 + 2;
 
 function extruder_mount_wire_ch_offset() = 4.5;
@@ -151,9 +151,9 @@ function cooling_duct_location() = [
 function blower_shaft_outer_l() = 17;
 function blower_shaft_outer_w() = 12.4;
 function blower_wall() = 1.24;
-function cooling_duct_mount_screw_offset_z() = m3_screw_cap_d(false) / 2 + 2;
+function cooling_duct_mount_screw_offset_z() = m3_screw_cap_d() / 2 + 2;
 function cooling_duct_mount_l() = blower_shaft_outer_l() + 2 * blower_wall();
-function cooling_duct_mount_screw_offset_y() = cooling_duct_mount_l() / 2 + m3_screw_cap_d(false) / 2 + 0.5;
+function cooling_duct_mount_screw_offset_y() = cooling_duct_mount_l() / 2 + m3_screw_cap_d() / 2 + 0.5;
 
 
 function accelerometer_w() = 16;

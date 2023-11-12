@@ -44,22 +44,25 @@ function hotend_heatsink_d() = 22;
 function hotend_heatsink_h() = outer_heatsink_h;
 function hotend_screw_offset() = 8;
 function hotend_total_h() = outer_heatsink_h + heater_dist + heater_height + nozzle_offset + nozzle_h;
+function hotend_ptfe_slot_depth() = 1;
 
 DragonHF_Hotend($detailed = true);
 
 module DragonHF_Hotend() {
-    outerHeatsink();
-    translate([0, 0, outer_heatsink_h + heater_dist])
-        heater_block();
-    translate([0, 0, outer_heatsink_h])
-        heater_to_heatsink_attachment();
-    translate([0, 0, inner_heatsink_offset])
-        inner_heatsink();
-    translate([0, 0, outer_heatsink_h + heater_dist])
-        rotate([180, 0, 0])
-            heat_isolator();
-    translate([0, 0, outer_heatsink_h + heater_dist + heater_height + nozzle_offset])
-        nozzle();
+    rotate([180, 0, 0])  {
+        outerHeatsink();
+        translate([0, 0, outer_heatsink_h + heater_dist])
+            heater_block();
+        translate([0, 0, outer_heatsink_h])
+            heater_to_heatsink_attachment();
+        translate([0, 0, inner_heatsink_offset])
+            inner_heatsink();
+        translate([0, 0, outer_heatsink_h + heater_dist])
+            rotate([180, 0, 0])
+                heat_isolator();
+        translate([0, 0, outer_heatsink_h + heater_dist + heater_height + nozzle_offset])
+            nozzle();
+    }
 }
 
 //!outerHeatsink($fn=40, $detailed=true);
@@ -93,8 +96,7 @@ module outerHeatsink() {
     v6_screw_chamfer = 0.5;
     
     filament_hole_inner_d = 1.8;
-    filament_hole_canal_d = 4;
-    filament_hole_canal_depth = 1;
+    ptfe_slot_d = 4;
     
     heatbreak_hole_d = 10;
     
@@ -187,9 +189,9 @@ module outerHeatsink() {
             }
             
 
-        // hole for the filament
+        // Filament shaft and PTFE tube slot for the filament
         translate([0, 0, -eps]) {
-            cylinder(d = filament_hole_canal_d, h = filament_hole_canal_depth);
+            cylinder(d = ptfe_slot_d, h = hotend_ptfe_slot_depth());
             cylinder(d = filament_hole_inner_d, h = outer_heatsink_h / 2, $fn=20);
         }
         
