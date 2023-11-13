@@ -1,6 +1,6 @@
 **This is a work-in-progress project**
 
-**The complete readme with printing/assembly instructions are coming**
+**The toolhead is finished and working, but the complete readme with printing/assembly instructions are coming**
 
 
 # Description
