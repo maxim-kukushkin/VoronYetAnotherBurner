@@ -108,6 +108,7 @@ function pcb_bracket_location() = [
 function pcb_bracket_side_wall_dist() = extruder_body_length() + 0.7;
 function pcb_bracket_side_wall_thickness() = (HE_cartridge_w() - pcb_bracket_side_wall_dist()) / 2;
 
+function pcb_bracket_pcb_spacing() = 2;
 function pcb_bracket_cover_mount_screw_offset_z() = 4;
 function pcb_bracket_cover_mount_screw_offset_y() = 5;
 

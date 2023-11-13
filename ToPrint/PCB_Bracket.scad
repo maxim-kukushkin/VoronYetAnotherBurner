@@ -32,13 +32,11 @@ width = HE_cartridge_w();
 
 pcb_top_offset = drag_chain_holder_thickness() + 0.5;
 
-pcb_spacing = 2;
-
 back_mount_pillar_side = 8.5;
 
 function th_pcb_location() = [
     pcb_bracket_location().x,
-    pcb_bracket_location().y + pcb_bracket_backplate_offset_y() + pcb_bracket_backplate_thickness() + pcb_spacing,
+    pcb_bracket_location().y + pcb_bracket_backplate_offset_y() + pcb_bracket_backplate_thickness() + pcb_bracket_pcb_spacing(),
     pcb_bracket_location().z + pcb_bracket_backplate_h() - pcb_top_offset];
 
 PCB_Bracket();
@@ -108,35 +106,24 @@ module _base() {
 }
 
 module _mounting_screw_holes() {
-    for (i = [-1, 1])
-        translate([i * top_mount_screw_dist() / 2, pcb_bracket_backplate_offset_y() - eps, pillar_z])
+    pcb_bracket_for_each_mounting_screw_pos()
             rotate([-90, 0, 0]) {
-                cylinder(d = m3_screw_d(), h = pillar_l + 2 * eps);
-                cylinder(d = m3_screw_cap_d(), h = m3_cap_h() + 0.2);
-            }
-}
-
-module _for_each_pcb_mounting_point() {
-    translate([
-        0,
-        pcb_bracket_backplate_offset_y() + pcb_bracket_backplate_thickness(),
-        pcb_bracket_backplate_h() - pcb_top_offset])
-        for(xz = th_pcb_screw_offsets())
-            translate([-xz[0], 0, xz[1]])
-                children();
+            cylinder(d = m3_screw_d(), h = pillar_l + 2 * eps);
+            cylinder(d = m3_screw_cap_d(), h = m3_cap_h() + 0.2);
+        }
 }
 
 module _pcb_heat_insert_slots() {
-    _for_each_pcb_mounting_point()
+    pcb_bracket_for_each_pcb_mounting_point()
         translate([0, eps, 0])
             rotate([0, 0, 90])
-                m3_insert_vertical_hole(pcb_spacing);
+                m3_insert_vertical_hole(pcb_bracket_pcb_spacing());
 }
 
 module _pcb_mounting_pads() {
-    _for_each_pcb_mounting_point()
+    pcb_bracket_for_each_pcb_mounting_point()
         rotate([-90, 0, 0])
-            m3_insert_volcano_pad(pcb_spacing);
+            m3_insert_volcano_pad(pcb_bracket_pcb_spacing());
 }
 
 module _arc_for_wires() {
@@ -146,26 +133,13 @@ module _arc_for_wires() {
                 circular_cut(20, 20, $fn=40);
 }
 
-module _for_each_blower_fan_mounting_point() {
-    fan_yz = blower_screw_holes(RB5015)[0];
-    fan_mount_yz = [
-        abs(pcb_bracket_location().y) - abs(left_blower_location().y) - fan_yz[0], 
-        fan_yz[1] - blower_fan_offset_z()];
-
-    translate([0, fan_mount_yz[0], fan_mount_yz[1]])
-        for (i = [-1, 1])
-            translate([i * width / 2, 0, 0])
-                rotate([0, 0, (i - 1) * 90])
-                    children();
-}
-
 module _blower_fan_heat_insert_slots() {
-    _for_each_blower_fan_mounting_point()
+    pcb_bracket_for_each_blower_fan_mounting_point()
         m4_insert_vertical_hole(blower_fan_offset_x());
 }
 
 module _blower_fan_mount_pads() {
-    _for_each_blower_fan_mounting_point()
+    pcb_bracket_for_each_blower_fan_mounting_point()
         m4_insert_vertical_pad(blower_fan_offset_x());
 }
 
@@ -181,28 +155,19 @@ module _carriage_mounting_pillars() {
 }
 
 module _drag_chain_holder_mount_screws() {
-    for (i = [-1, 1])
-        translate([
-            i * drag_chain_holder_screw_dist() / 2,
-            pcb_bracket_backplate_offset_y() - eps,
-            pcb_bracket_backplate_h() - drag_chain_holder_thickness() / 2])
-            rotate([-90, 0, 0]) {
-                cylinder(d = m3_screw_d(), h = pcb_bracket_backplate_thickness() + 2 * eps);
-                cylinder(d = m3_screw_cap_d(), h = m3_cap_h());
-            }
+    pcb_bracket_for_each_drag_chain_screw_pos()
+        rotate([-90, 0, 0]) {
+            cylinder(d = m3_screw_d(), h = pcb_bracket_backplate_thickness() + 2 * eps);
+            cylinder(d = m3_screw_cap_d(), h = m3_cap_h());
+        }
 }
 
 module _top_cover_mount_screws() {
-    for (i = [-1, 1])
-        translate([
-            i * width / 2 + eps,
-            pcb_bracket_backplate_offset_y() - pcb_bracket_cover_mount_screw_offset_y(),
-            pcb_bracket_backplate_h() - pcb_bracket_cover_mount_screw_offset_z()])
-            mirror([i - 1, 0, 0])
-                rotate([0, -90, 0]) {
-                    cylinder(d = m3_screw_d(), h = pcb_bracket_side_wall_thickness() + 2 * eps);
-                    cylinder(d = m3_screw_cap_d(), h = m3_cap_h());
-                }
+    pcb_bracket_for_each_top_cover_mount_screw_pos()
+        rotate([0, -90, 0]) {
+            cylinder(d = m3_screw_d(), h = pcb_bracket_side_wall_thickness() + 2 * eps);
+            cylinder(d = m3_screw_cap_d(), h = m3_cap_h());
+        }
 }
 
 module _right_blower_intake() {
@@ -210,4 +175,55 @@ module _right_blower_intake() {
         rotate([-90, 90, 0])
             linear_extrude(height = 2 * (pcb_bracket_backplate_offset_y() + pcb_bracket_backplate_thickness() + eps), center = true)
                 circular_cut(right_blower_intake_w(), right_blower_intake_depth());
+}
+
+module pcb_bracket_for_each_mounting_screw_pos() {
+    for (i = [-1, 1])
+        translate([i * top_mount_screw_dist() / 2, pcb_bracket_backplate_offset_y() - eps, pillar_z])
+            children();
+}
+
+module pcb_bracket_for_each_drag_chain_screw_pos() {
+    for (i = [-1, 1])
+        translate([
+            i * drag_chain_holder_screw_dist() / 2,
+            pcb_bracket_backplate_offset_y() - eps,
+            pcb_bracket_backplate_h() - drag_chain_holder_thickness() / 2
+        ])
+            children();
+}
+
+module pcb_bracket_for_each_pcb_mounting_point() {
+    translate([
+        0,
+        pcb_bracket_backplate_offset_y() + pcb_bracket_backplate_thickness(),
+        pcb_bracket_backplate_h() - pcb_top_offset
+    ])
+        for(xz = th_pcb_screw_offsets())
+            translate([-xz[0], 0, xz[1]])
+                children();
+}
+
+module pcb_bracket_for_each_top_cover_mount_screw_pos() {
+    for (i = [0, 1])
+        mirror([i, 0, 0])
+            translate([
+                width / 2 + eps,
+                pcb_bracket_backplate_offset_y() - pcb_bracket_cover_mount_screw_offset_y(),
+                pcb_bracket_backplate_h() - pcb_bracket_cover_mount_screw_offset_z()
+            ])
+                children();
+}
+
+module pcb_bracket_for_each_blower_fan_mounting_point() {
+    fan_yz = blower_screw_holes(RB5015)[0];
+    fan_mount_yz = [
+        abs(pcb_bracket_location().y) - abs(left_blower_location().y) - fan_yz[0], 
+        fan_yz[1] - blower_fan_offset_z()];
+
+    translate([0, fan_mount_yz[0], fan_mount_yz[1]])
+        for (i = [0, 1])
+            mirror([i, 0, 0])
+                translate([width / 2, 0, 0])
+                    children();
 }

@@ -220,16 +220,37 @@ color(screw_color) {
                     rotate([0, 90, 0])
                         m3_screw(6);
 
-    /*
-    for (i = [-1, 1])
-        translate([
-                i * top_mount_screw_dist() / 2,
-                0,
-                top_mount_screw_z_offset()
-            ])
-            rotate([90, 0, 0])
-                m3_screw(20);
-    */
+    translate(pcb_bracket_location()) {
+        // PCB Bracket to X Carriage mounting screws
+        pcb_bracket_for_each_mounting_screw_pos()
+            translate([0, m3_cap_h(), 0])
+                rotate([90, 0, 0])
+                    m3_screw(20);
+
+        // Drag chain holder screws
+        pcb_bracket_for_each_drag_chain_screw_pos()
+            translate([0, m3_cap_h(), 0])
+                rotate([90, 0, 0])
+                    m3_screw(8);
+
+        // PCB screws
+        pcb_bracket_for_each_pcb_mounting_point()
+            translate([0, pcb_bracket_pcb_spacing() + th_pcb_thickness(), 0])
+                rotate([-90, 0, 0])
+                    m3_screw(6);
+
+        // Top cover to PCB bracket mounting screws
+        pcb_bracket_for_each_top_cover_mount_screw_pos()
+            translate([-m3_cap_h(), 0, 0])
+                rotate([0, 90, 0])
+                    m3_screw(8);
+
+        // Blower fan mounting screws
+        pcb_bracket_for_each_blower_fan_mounting_point()
+            translate([blower_fan_offset_x() + blower_depth(RB5015), 0, 0])
+                rotate([0, 90, 0])
+                    m4_screw(20);
+    }
 }
 
 

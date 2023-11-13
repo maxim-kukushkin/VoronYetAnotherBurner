@@ -28,6 +28,10 @@ m3_screw_d = [2.6, 3.5];
 m3_screw_cap_d = [5.2, 5.6, 7];
 m3_screw_cap_h = [3, 0.2];
 
+m4_screw_d = [3.6, 4.5];
+m4_screw_cap_d = [6.5, 6.8, 8.5];
+m4_screw_cap_h = [4.1, 0.4];
+
 function _for_cutting() = is_undef($for_cutting) ? true : $for_cutting;
 
 function m2_5_screw_d(for_cutting = true) = m2_5_screw_d[for_cutting ? 1 : 0];
@@ -69,6 +73,10 @@ module m2_screw(length, with_washer = false) {
 
 module m3_screw(length, with_washer = false) {
     mX_screw_(length, m3_screw_cap_h, m3_screw_d, m3_screw_cap_d, with_washer);
+}
+
+module m4_screw(length, with_washer = false) {
+    mX_screw_(length, m4_screw_cap_h, m4_screw_d, m4_screw_cap_d, with_washer);
 }
 
 module m2_5_screw(length, with_washer = false) {

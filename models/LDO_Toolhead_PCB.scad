@@ -25,6 +25,7 @@ eps = 0.004;
 function th_pcb_l() = 45;
 function th_pcb_left_wing_w() = 30.7;
 function th_pcb_right_wing_w() = 36.2;
+function th_pcb_thickness() = 1.6;
 
 function th_pcb_screw_offsets() = [
     [th_pcb_l() / 2 - 19, -9],
@@ -38,15 +39,12 @@ pcb_rounding = 1;
 
 right_wing_l = 15.1;
 
-pcb_thickness = 1.6;
-
-
 LDO_Toolhead_PCB();
 
 module LDO_Toolhead_PCB() {
     _pcb();
 
-    translate([0, 0, pcb_thickness]) {
+    translate([0, 0, th_pcb_thickness()]) {
         // Part Cooling Fan (PCF)
         translate([-18, -6])
             jst_xh_header(jst_xh_header, 2, colour="#333333", pin_colour="silver");
@@ -86,7 +84,7 @@ module LDO_Toolhead_PCB() {
 
 module _pcb() {
     color("#333333")
-    linear_extrude(height = pcb_thickness)
+    linear_extrude(height = th_pcb_thickness())
     difference() {
         union() {
             difference() {
