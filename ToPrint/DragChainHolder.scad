@@ -46,27 +46,34 @@ DragChainHolder();
 
 module DragChainHolder() {
     color(parts_color())
-    rotate([90, 0, 90])
-        difference() {
-            _main_body();
+    difference() {
+        _main_body();
 
-            // mounting screw holes
-            for (i = [-1, 1])
-                translate([0, 0, i * drag_chain_holder_screw_dist() / 2])
-                    rotate([0, 0, 180])
-                        m3_insert_vertical_hole(0);
+        // mounting screw holes
+        drag_chain_holder_for_each_mount_screw_pos()
+            rotate([0, 0, -90])
+                m3_insert_vertical_hole(0);
 
-            // bottom heat insert slots
-            for (i = [-1, 1])
-                translate([
-                    length - drag_chain_w() / 2,
-                    top_thickness / 2 - top_level_diff,
-                    i * drag_chain_screw_dist() / 2])
-                    rotate([0, 0, 90])
-                        m3_insert_vertical_hole(0);
-        }
+        // bottom heat insert slots
+        drag_chain_holder_for_each_chain_screw_pos()
+            rotate([0, -90, 0])
+                m3_insert_vertical_hole(0);
+    }
 }
 
+module drag_chain_holder_for_each_mount_screw_pos() {
+    for (i = [-1, 1])
+        translate([i * drag_chain_holder_screw_dist() / 2, 0, 0])
+            children();
+}
+
+module drag_chain_holder_for_each_chain_screw_pos() {
+    for (i = [-1, 1])
+        translate([i * drag_chain_screw_dist() / 2, length - drag_chain_w() / 2, top_thickness / 2 - top_level_diff])
+            children();
+}
+
+//!_main_body();
 module _main_body() {
     horizontal_dots = [
         [0, top_y1],
@@ -106,12 +113,13 @@ module _main_body() {
             bezier_dot_num)) x
     ];
     
-    intersection() {
-        linear_extrude(height = top_width, center = true)
-            polygon(horizontal_dots);
+    rotate([90, 0, 90])
+        intersection() {
+            linear_extrude(height = top_width, center = true)
+                polygon(horizontal_dots);
 
-        rotate([90, 0, 0])
-            linear_extrude(height = (bottom_level_diff + top_thickness) * 2, center = true)
-                polygon(vertical_dots);
-    }
+            rotate([90, 0, 0])
+                linear_extrude(height = (bottom_level_diff + top_thickness) * 2, center = true)
+                    polygon(vertical_dots);
+        }
 }

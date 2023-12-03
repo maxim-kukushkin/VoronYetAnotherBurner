@@ -83,14 +83,19 @@ module _front_heat_insert_panel() {
 }
 
 module _join_insert_holes() {
+    top_cover_for_each_join_insert_pos()
+        rotate([0, 0, -90])
+            m3_insert_vertical_hole(0);
+}
+
+module top_cover_for_each_join_insert_pos() {
     for (i = [-1, 1])
         translate([
             i * cover_join_screw_dist() / 2,
             -cover_split_offset(),
-            cover_top_plate_thickness() - cover_front_mount_screw_offset()])
-            rotate([0, 0, -90])
-                m3_insert_vertical_hole(0);
-    
+            cover_top_plate_thickness() - cover_front_mount_screw_offset()
+        ])
+            children();
 }
 
 module _ptfe_tube_hole() {
@@ -103,8 +108,8 @@ module _extruder_lever_cut() {
         centered_box([30, lever_extension_thickness() + 0.6, cover_top_plate_thickness() + 2 * eps], centerZ=false);
 }
 
+y_tolerance = 0.2;
 module _side_mount_holders() {
-    y_tolerance = 0.2;
     height = pcb_bracket_cover_mount_screw_offset_z() + m3_heat_insert_d() / 2 + heat_insert_min_offset();
 
     right_w = pcb_bracket_cover_mount_screw_offset_y() - y_tolerance;
@@ -125,6 +130,37 @@ module _side_mount_holders() {
                         translate([-right_w, -pcb_bracket_cover_mount_screw_offset_z(), -eps])
                             cylinder(d = m3_heat_insert_d(), h = 5);
                     }
+}
+
+//!_side_mount_holder();
+module _side_mount_holder() {
+    height = pcb_bracket_cover_mount_screw_offset_z() + m3_heat_insert_d() / 2 + heat_insert_min_offset();
+    right_w = pcb_bracket_cover_mount_screw_offset_y() - y_tolerance;
+    left_w = m3_heat_insert_d() / 2;
+
+
+    difference() {
+        linear_extrude(height = 6) {
+            l = left_w + right_w;
+            translate([0, eps])
+                uncentered_square([-l, -height - eps]);
+            polygon([[-l + eps, eps], [-l, -height], [-l - height * 0.7, eps]]);
+        }
+
+        translate([-right_w, -pcb_bracket_cover_mount_screw_offset_z(), -eps])
+            cylinder(d = m3_heat_insert_d(), h = 5);
+    }
+}
+
+module top_cover_for_each_bracket_join_pos() {
+    for (i = [-1, 1])
+        mirror([i + 1, 0, 0])
+            translate([
+                width / 2 - pcb_bracket_side_wall_thickness() - 0.1,
+                pcb_bracket_backplate_offset_y() - pcb_bracket_offset - pcb_bracket_cover_mount_screw_offset_y(),
+                -pcb_bracket_cover_mount_screw_offset_z()
+            ])
+                children();
 }
 
 module _side_walls() {

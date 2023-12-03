@@ -20,6 +20,7 @@ use <models/DragonHF_Hotend.scad>
 use <models/LDO_Toolhead_PCB.scad>
 
 use <lib/screws.scad>
+use <lib/heat_inserts.scad>
 use <lib/2d_shapes.scad>
 use <lib/3d_shapes.scad>
 
@@ -250,6 +251,44 @@ color(screw_color) {
             translate([blower_fan_offset_x() + blower_depth(RB5015), 0, 0])
                 rotate([0, 90, 0])
                     m4_screw(20);
+    }
+}
+
+
+/******
+Heat inserts
+******/
+
+union() {
+    translate(top_cover_location()) {
+        top_cover_for_each_join_insert_pos()
+            rotate([90, 0, 0])
+                m3_heat_insert();
+
+        top_cover_for_each_bracket_join_pos()
+            rotate([0, 90, 0])
+                m3_heat_insert();
+    }
+
+    translate(drag_chain_holder_location()) {
+        drag_chain_holder_for_each_mount_screw_pos()
+            rotate([90, 0, 0])
+                m3_heat_insert();
+
+        drag_chain_holder_for_each_chain_screw_pos()
+            m3_heat_insert();
+    }
+
+    translate(pcb_bracket_location()) {
+        pcb_bracket_for_each_pcb_mounting_point()
+            translate([0, pcb_bracket_pcb_spacing(), 0])
+                rotate([-90, 0, 0])
+                    m3_heat_insert();
+
+        pcb_bracket_for_each_blower_fan_mounting_point()
+            translate([blower_fan_offset_x(), 0, 0])
+                rotate([0, 90, 0])
+                    m4_heat_insert();
     }
 }
 

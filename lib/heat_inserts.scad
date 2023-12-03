@@ -73,6 +73,28 @@ module _mX_insert_volcano_pad(spacing, d, angle, eps) {
             circle(d = diams[1]);
 }   
 
+module m2_heat_insert(h = 3.5) {
+    _mX_heat_insert(m2_heat_insert_d(), 2, h);
+}
+
+module m3_heat_insert(h = 4) {
+    _mX_heat_insert(m3_heat_insert_d(), 3, h);
+}
+
+module m4_heat_insert(h = 4) {
+    _mX_heat_insert(m4_heat_insert_d(), 4, h);
+}
+
+module _mX_heat_insert(outer_d, inner_d, height) {
+    color("gold")
+        translate([0, 0, -height])
+            linear_extrude(height = height)
+                difference() {
+                    circle(d = outer_d);
+                    circle(d = inner_d);
+                }
+}
+
 function _top_bottom_d(d, h, angle) =
     let (top_d = d + 2 * heat_insert_min_offset())
         [top_d, 2 * h / tan(angle) + top_d];
