@@ -164,25 +164,35 @@ module _mounting_screw_holes() {
 }
 
 module _front_part_mount_heat_insert_slots() {
+    HE_cartridge_b_for_each_f_heat_insert_pos()
+        rotate([-90, 0, 0])
+            cylinder(d = m3_heat_insert_d(), h = 5, $fn=30);
+}
+
+module HE_cartridge_b_for_each_f_heat_insert_pos() {
     for (i = [-1, 1])
         translate([
             i * HE_cartridge_common_screw_dist() / 2,
             -depth - eps,
             -HE_cartridge_common_screw_offset_z()
         ])
-            rotate([-90, 0, 0]) {
-                cylinder(d = m3_heat_insert_d(), h = 5, $fn=30);
-            }
+            children();
 }
 
 module _cooling_duct_mount_heat_insert_slots() {
-    for (i = [-1, 1])
-        translate([
-            i * HE_cartridge_w() / 2,
-            -depth + cooling_duct_mount_screw_offset_y(),
-            -(HE_cartridge_location().z - right_blower_location().z + cooling_duct_mount_screw_offset_z())])
-            rotate([0, 0, (i - 1) * 90])
-                m3_insert_vertical_hole(0);
+    HE_cartidge_b_for_each_duct_mount_heat_insert_pos()
+        m3_insert_vertical_hole(0);
+}
+
+module HE_cartidge_b_for_each_duct_mount_heat_insert_pos() {
+    for (i = [0, 1])
+        mirror([i, 0, 0])
+            translate([
+                HE_cartridge_w() / 2,
+                -depth + cooling_duct_mount_screw_offset_y(),
+                -(HE_cartridge_location().z - right_blower_location().z + cooling_duct_mount_screw_offset_z())
+            ])
+                children();
 }
 
 module _blower_wire_channels() {

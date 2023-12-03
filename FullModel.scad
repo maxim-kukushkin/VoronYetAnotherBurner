@@ -290,6 +290,33 @@ union() {
                 rotate([0, 90, 0])
                     m4_heat_insert();
     }
+
+    translate(HE_cartridge_location()) {
+        HE_cartridge_b_for_each_f_heat_insert_pos()
+            rotate([90, 0, 0])
+                m3_heat_insert();
+
+        HE_cartidge_b_for_each_duct_mount_heat_insert_pos()
+            rotate([0, 90, 0])
+                m3_heat_insert();
+    }
+
+    translate(HE_cartridge_front_location()) {
+        HE_cartridge_front_for_each_fan_screw_pos()
+            rotate([90, 0, 0])
+                m3_heat_insert();
+
+        for_each_accelerometer_screw_pos()
+            rotate([0, 90, 0])
+                m2_heat_insert();
+
+        HE_cartridge_front_for_each_duct_heat_insert_pos()
+            rotate([0, 90, 0])
+                m3_heat_insert();
+
+        HE_cartridge_front_for_each_extruder_mount_pos()
+            m3_heat_insert();
+    }
 }
 
 

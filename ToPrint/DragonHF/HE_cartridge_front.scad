@@ -168,10 +168,19 @@ module _fan_mount_holes() {
 }
 
 module _extruder_mount_holes() {
+    HE_cartridge_front_for_each_extruder_mount_pos()
+        rotate([180, 0, 0])
+            cylinder(d = m3_heat_insert_d(), h = 5 + eps);
+}
+
+module HE_cartridge_front_for_each_extruder_mount_pos() {
     for (i = [-1, 1])
-        translate([i * extruder_mount_screw_dist() / 2, extruder_mount_shaft_offset() - extruder_mount_w() / 2, eps])
-            rotate([180, 0, 0])
-                cylinder(d = m3_heat_insert_d(), h = 5 + eps);
+        translate([
+            i * extruder_mount_screw_dist() / 2,
+            extruder_mount_shaft_offset() - extruder_mount_w() / 2,
+            eps
+        ])
+            children();
 }
 
 module _back_mount_screw_holes() {
@@ -183,13 +192,19 @@ module _back_mount_screw_holes() {
 }
 
 module _cooling_duct_mount_holes() {
-    for (i = [-1, 1])
-        translate([
-            i * HE_cartridge_w() / 2,
-            -cooling_duct_mount_screw_offset_y(),
-            -(HE_cartridge_location().z - right_blower_location().z + cooling_duct_mount_screw_offset_z())])
-            rotate([0, 0, (i - 1) * 90])
-                m3_insert_vertical_hole(0);
+    HE_cartridge_front_for_each_duct_heat_insert_pos()
+        m3_insert_vertical_hole(0);
+}
+
+module HE_cartridge_front_for_each_duct_heat_insert_pos() {
+    for (i = [0, 1])
+        mirror([i, 0, 0])
+            translate([
+                HE_cartridge_w() / 2,
+                -cooling_duct_mount_screw_offset_y(),
+                -(HE_cartridge_location().z - right_blower_location().z + cooling_duct_mount_screw_offset_z())
+            ])
+                children();
 }
 
 module _blower_wire_channels() {
