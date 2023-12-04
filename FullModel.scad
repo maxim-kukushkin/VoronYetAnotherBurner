@@ -46,6 +46,7 @@ screw_color = "#333333";
 /******
 DEVICES
 ******/
+
 rotate([-90, 0, -90])
     translate([/*Y*/ -164.2, /*Z*/ -131.6, /*X*/-21.6])
         import("3rd_party/x_frame_V2TR_MGN12_left.stl");
@@ -65,7 +66,8 @@ translate(extruder_location())
 translate(HE_location())
     rotate([0, 0, 0])
         DragonHF_Hotend($detailed=false);
-        
+    
+/*    
 translate(left_blower_location())
     rotate([90, 0, -90])
         blower(RB5015);
@@ -73,6 +75,7 @@ translate(left_blower_location())
 translate(right_blower_location())
     rotate([90, 0, -90])
         blower(RB5015);
+*/
 
 translate(HE_fan_location())
     rotate([-90, 0, 0])
@@ -82,17 +85,19 @@ translate(th_pcb_location())
     rotate([90, 0, 180])
         LDO_Toolhead_PCB();
 
+/*
 translate(drag_chain_location())
     drag_chain();
 
 translate(accelerometer_location())
     accelerometer();
+*/
 
 translate(extruder_location())
     translate([0, 0, extruder_body_height() - 1])
         PTFE_tube(30);
 
-translate(HE_location())
+*translate(HE_location())
     translate([0, 0, -hotend_ptfe_slot_depth()])
         PTFE_tube(29.7);
         
@@ -106,13 +111,14 @@ translate(HE_cartridge_location())
 translate(HE_cartridge_front_location())
     translate([0, -0.1, 0])
     HE_cartridge_front();
-        
+ 
 translate(extruder_mount_location())
     ExtruderMount();
 
 translate(pcb_bracket_location())
     PCB_Bracket();
 
+/*       
 translate(drag_chain_holder_location())
     DragChainHolder();
 
@@ -128,13 +134,14 @@ translate(top_cover_location())
 translate(front_cover_location())
     translate([0, -0.1, 0])
     FrontCover();
+*/
 
 translate(extruder_location())
     translate([0, -tension_lever_w_offset(), extruder_body_height() + 1])
         rotate([90, 0, 180])
             ExtruderLeverExtension();
 
-translate(motor_window_insert_location())
+*translate(motor_window_insert_location())
     MotorWindowInsert();
 
 /*******
@@ -173,13 +180,13 @@ color(screw_color) {
                     m3_screw(12);
 
         // Accelerometer mounting
-        for_each_accelerometer_screw_pos()
+        *for_each_accelerometer_screw_pos()
             rotate([0, 90, 0])
                 translate([0, 0, accelerometer_h()])
                     m2_screw(6);
     }
 
-    translate(front_cover_location()) {
+    *translate(front_cover_location()) {
         // Bottom mounting screws
         front_cover_for_each_bottom_screw_pos()
             translate([0, m3_cap_h(), 0])
@@ -197,7 +204,8 @@ color(screw_color) {
         translate([
             extruder_mount_location().x + i * extruder_mount_screw_dist() / 2,
             extruder_mount_location().y - extruder_mount_screw_y_offset(),
-            extruder_location().z])
+            extruder_location().z + 15
+        ])
             m3_screw(16, with_washer=true);
 
     // Hotend screws
@@ -214,7 +222,7 @@ color(screw_color) {
                 m3_screw(12);
 
     // Cooling duct mount
-    for (i = [0, 1])
+    *for (i = [0, 1])
         mirror([i, 0, 0])
             translate(cooling_duct_location())
                 cooling_duct_for_each_screw_pos()
@@ -229,7 +237,7 @@ color(screw_color) {
                     m3_screw(20);
 
         // Drag chain holder screws
-        pcb_bracket_for_each_drag_chain_screw_pos()
+        *pcb_bracket_for_each_drag_chain_screw_pos()
             translate([0, m3_cap_h(), 0])
                 rotate([90, 0, 0])
                     m3_screw(8);
@@ -241,26 +249,25 @@ color(screw_color) {
                     m3_screw(6);
 
         // Top cover to PCB bracket mounting screws
-        pcb_bracket_for_each_top_cover_mount_screw_pos()
+        *pcb_bracket_for_each_top_cover_mount_screw_pos()
             translate([-m3_cap_h(), 0, 0])
                 rotate([0, 90, 0])
                     m3_screw(8);
 
         // Blower fan mounting screws
-        pcb_bracket_for_each_blower_fan_mounting_point()
+        *pcb_bracket_for_each_blower_fan_mounting_point()
             translate([blower_fan_offset_x() + blower_depth(RB5015), 0, 0])
                 rotate([0, 90, 0])
                     m4_screw(20);
     }
 }
 
-
 /******
 Heat inserts
 ******/
 
 union() {
-    translate(top_cover_location()) {
+    *translate(top_cover_location()) {
         top_cover_for_each_join_insert_pos()
             rotate([90, 0, 0])
                 m3_heat_insert();
@@ -270,7 +277,7 @@ union() {
                 m3_heat_insert();
     }
 
-    translate(drag_chain_holder_location()) {
+    *translate(drag_chain_holder_location()) {
         drag_chain_holder_for_each_mount_screw_pos()
             rotate([90, 0, 0])
                 m3_heat_insert();

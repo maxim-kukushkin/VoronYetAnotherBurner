@@ -34,7 +34,13 @@
 - Bowden tube (to guide the filament into the extruder)
 - 3x awg 26-30 wires, preferably different colors, ~50cm each (better to have some extra) (for LEDs)
 - Molex Micro-Fit 3.0 male (this is what LDO kits use, it may vary based on when LED connector is already being used in the printer)
+- For JST-XH 2-pin splitter:
+  - 2x JST-XH 2-pin female plugs
+  - 1x JST-XH 2-pin male plug
+  - 2x awg 26-30 wires (ideally red and black), ~10cm each
+  - (optional, but highly recommended) Heat shrink tubes matching the wires in diamter
 - (optional) 3x JST-XH 2-pin connectors (to shorten fan wires and ensure better cablework)
+- 1x JST-XH 4-pin connector (for extruder's motor, in case LDO Breakout PCB is used)
 
 ### Tools
 - Soldering iron + solder
