@@ -32,10 +32,10 @@ wire_ch_depth = 5;
 
 function extruder_mount_screw_y_offset() = extruder_mount_w() / 2 - extruder_mount_shaft_offset();
 
-ExtruderMount();
+ExtruderMount(for_stl_export = true);
 
-module ExtruderMount() {
-    color(parts_color()) {
+module ExtruderMount(for_stl_export = false) {
+    color(parts_color()) rotate([for_stl_export ? 180 : 0, 0, 0]) {
         difference() {
             _motor_mount_main_body();
             

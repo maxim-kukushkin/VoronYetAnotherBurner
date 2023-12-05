@@ -20,12 +20,12 @@ use <../common.scad>
 
 use <../models/BondTech_LGX_Lite.scad>
 
-MotorWindowInsert();
+MotorWindowInsert(for_stl_export = true);
 
-module MotorWindowInsert() {
+module MotorWindowInsert(for_stl_export = false) {
     inner_d = motor_body_d() + 0.3;
     color([0.8, 0.8, 0.8, 0.7])
-        rotate([-90, 0, 0]) {
+        rotate([for_stl_export ? 180 : -90, 0, 0]) {
             linear_extrude(height = cover_front_plate_thickness() + eps)
                 difference() {
                     circle(d = motor_body_d() + 2 * cover_motor_insert_w() + 0.1);

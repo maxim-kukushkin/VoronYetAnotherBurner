@@ -47,10 +47,10 @@ cooling_fan_channel_dots = Bezier([
     [-5, eps]
 ]);
 
-HE_cartridge_back();
+HE_cartridge_back(for_stl_export = true);
 
-module HE_cartridge_back() {
-    color(parts_color()) {
+module HE_cartridge_back(for_stl_export = false) {
+    color(parts_color()) rotate([for_stl_export ? -90 : 0, 0, 0]) {
         difference() {
             union() {
                 uncentered_box([HE_cartridge_w(), -depth, -HE_cartridge_h()], centerX=true);

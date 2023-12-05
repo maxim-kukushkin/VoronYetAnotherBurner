@@ -30,8 +30,6 @@ use <../../models/DragonHF_Hotend.scad>
 
 use <../../common.scad>
 
-HE_cartridge_front();
-
 function cooling_fan_d() = fan_bore(fan40x11);
 function cooling_fan_screw_dist() = 32;
 function HE_cartridge_fan_offset_z() = HE_cartridge_h() - HE_fan_to_bottom_offset() - fan_width(fan40x11) / 2;
@@ -57,8 +55,11 @@ function accelerometer_location() = [
     HE_cartridge_front_location().z - accelerometer_center_offset_yz[1]
 ];
 
-module HE_cartridge_front() {
-    color(parts_color()) {
+
+HE_cartridge_front(for_stl_export = true);
+
+module HE_cartridge_front(for_stl_export = false) {
+    color(parts_color()) rotate([for_stl_export ? 90 : 0, 0, 0]) {
         difference() {
             union() {
                 main_body();

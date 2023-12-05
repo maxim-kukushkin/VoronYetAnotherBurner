@@ -35,10 +35,11 @@ length = cover_split_offset() +
 
 wall = 5;
 
-TopCover();
+TopCover(for_stl_export = true);
 
-module TopCover() {
+module TopCover(for_stl_export = false) {
     color(cover_color()) {
+        rotate([for_stl_export ? 90 : 0, 0, 0])
         difference() {
             union() {
                 _top_lid();

@@ -3,14 +3,15 @@
 - Filament: PETG
 - Part Cooling: for majority of parts (see the **Advice** comments inside each section)
 - Supports: for some of the parts (see the **Advice** comemtns inside each section)
+- Orientation: all printable STLs have been pre-rotated the way they're advised to be printed
 
-# Assemlby
+# Assembly
 
 ## 1. Hot End cartridge
 ### 1.1. Dragon High Flow
 
 #### 1.1.1. Print the files
-Start by printing the hot end cartridge parts from the respective [subdirectory](../ToPrint/DragonHF/stls)
+Start by printing the hot end cartridge parts from the respective [subdirectory](../ToPrint/DragonHF/stls) - **Advice:** use support touching build plate
 
 #### 1.1.2. Add heat inserts to the front part
 ![HE cartridge front with heat inserts](resources/HE_cartridge_DragonHF_front.png)
@@ -165,7 +166,7 @@ Most probably your Breakout PCB (at least LDO's one) comes with a single connect
 ## 8. Top Cover
 
 ### 8.1. Print the part
-[Top Cover STL](../ToPrint/stls/[a]_TopCover.stl)
+[Top Cover STL](../ToPrint/stls/[a]_TopCover.stl) - **Advice:** use support touching build plate
 
 ### 8.2. Add heat inserts 
 ![Top Cover with heat inserts](resources/TopCover.png)

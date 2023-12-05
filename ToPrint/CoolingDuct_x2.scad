@@ -44,12 +44,15 @@ shaft_center_x = blower_fan_offset_x() + mount_w / 2;
 nozzle_z = -(cooling_duct_location().z - HE_location().z) - hotend_total_h();
 nozzle_x = -cooling_duct_location().x;
         
-CoolingDuct();
-*translate([nozzle_x, 0, nozzle_z + hotend_total_h()])
-    DragonHF_Hotend();
+CoolingDuct(for_stl_export = true);
 
-module CoolingDuct() {
-    color(parts_color()) {
+/** For tunning with the Hotend
+translate([nozzle_x, 0, nozzle_z + hotend_total_h()])
+    DragonHF_Hotend();
+*/
+
+module CoolingDuct(for_stl_export = false) {
+    color(parts_color()) rotate([for_stl_export ? 180 : 0, 0, 0]) {
         _vertical_shaft();
         _blower_shaft();
         _vent();

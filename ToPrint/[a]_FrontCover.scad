@@ -47,10 +47,11 @@ fan_offset = front_cover_location().z - HE_cartridge_front_location().z + HE_car
 led_housing_outer_r = total_depth - abs(cartridge_front_y);
 led_housing_inner_r = led_housing_outer_r - 2;
 
-FrontCover();
+FrontCover(for_stl_export = true);
 
-module FrontCover() {
+module FrontCover(for_stl_export = false) {
     color(cover_color()) {
+        rotate([for_stl_export ? 90 : 0, 0, 0])
         difference() {
             union() {
                 _top_lid();
