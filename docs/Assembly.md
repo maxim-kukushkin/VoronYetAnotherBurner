@@ -1,4 +1,10 @@
-## IN PROGRESS (coming soon)
+# Printing suggestions
+- Layer: 0.2mm
+- Filament: PETG
+- Part Cooling: for majority of parts (see the **Advice** comments inside each section)
+- Supports: for some of the parts (see the **Advice** comemtns inside each section)
+
+# Assemlby
 
 ## 1. Hot End cartridge
 ### 1.1. Dragon High Flow
@@ -106,6 +112,21 @@ It may seem to not fit too tight, but it won't be problem: due to the small knob
 ![Extruder with lever](resources/Extruder_with_lever.png)
 
 ### 5.5. Attach the bowden tube
+Choose between 2 options
+
+#### If using one single bowden tube between the spool and the toolhead
+*This is the original Stealthburner's/Voron's design, where one single bowden tube goes from the filament spool outside the printer, all the way into the toolhead*
+
+If going for this option:
+
+- Perform partial top cover assembly by following [step 1](#8-1-print-the-part) and [step 2](#8-2-add-heat-inserts) there
+- Guide the bowden tube through the filament hole in that part
+- Leave the top cover hanging on the bowden tube for now
+- Properly fix the bowden tube in the extruder (it normally comes with all needed parts)
+
+#### If using a short bowden tube
+*This is the case when the toolhead has a short "tension relief" bowden tube, but the filament hangs in the air inside the printer*
+
 Cut the bowden tube to your liking (~50-60mm recommended) and properly fix it in the extruder (it normally comes with all needed parts)
 
 ![Extruder with bowden](resources/Extruder_with_bowden.png)

@@ -1,8 +1,3 @@
-**This is a work-in-progress project**
-
-**The toolhead is finished and working, but the assembly instructions are coming**
-
-
 # Description
 
 ![Full assembly render](docs/resources/FullToolheadRender.png)
