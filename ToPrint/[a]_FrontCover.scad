@@ -146,7 +146,6 @@ module _front_panel() {
                             cover_rounded_profile(width, side_rounding);
                     }
 
-            echo (front_wall);
             // motor window
             translate([0, eps, -(motor_offset - front_inner_rounding)])
                 rotate([90, 0, 0])

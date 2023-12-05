@@ -35,7 +35,7 @@ The toolhead uses BondTech LGX Lite extruder and currently only supports Dragon 
 See the [BOM document](docs/BOM.md)
 
 ## Assembly
-See the [Assembly document](docs/Assembly.md)
+See the [Assembly manual](docs/Assembly.md)
 
 ## Development
 The OpenSCAD models included as source files rely on [NopSCADlib](https://github.com/nophead/NopSCADlib). In order to be able to open them and render the model in OpenSCAD one needs to install it first.
