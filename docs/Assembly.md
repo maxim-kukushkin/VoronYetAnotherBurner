@@ -119,7 +119,7 @@ Choose between 2 options
 
 If going for this option:
 
-- Perform partial top cover assembly by following [step 1](#8-1-print-the-part) and [step 2](#8-2-add-heat-inserts) there
+- Perform partial top cover assembly by following [step 1](#81-print-the-part) and [step 2](#82-add-heat-inserts) there
 - Guide the bowden tube through the filament hole in that part
 - Leave the top cover hanging on the bowden tube for now
 - Properly fix the bowden tube in the extruder (it normally comes with all needed parts)
