@@ -188,7 +188,7 @@ Most probably your Breakout PCB (at least LDO's one) comes with a single connect
 ![Front Cover with ring](resources/FrontCover_with_ring.png)
 
 ### 9.3. Solder LEDs
-6 LEDs and need to be solder into a single strip in order to be then inserted into the front cover.
+6 LEDs need to be soldered into a single strip in order to be then inserted into the front cover.
 Observe the markings on the LEDs and follow the directions shown on the photo.
 
 Pay attention to the wire colors. One the photo: red - 5v, black - Gnd, white - Data.
@@ -226,7 +226,7 @@ Fit the LEDs into their respective slots as shown on the photo
 ## 11. Blower fans
 - Slide the blower fans on both sides from the top (they should fit tightly on the ducts)
   - The left blower will have the fan facing outside
-  - The right blower will have the fan facing inside. The toolhead part intentionally have cuts and spacing to ensure proper air intake.
+  - The right blower will have the fan facing inside. The toolhead parts intentionally have cuts and spacing to ensure proper air intake.
 - Try to guide the wires through the channels on the Hotend cartridge to make them less visible
 - Use 2x M4x20 screws (1 on each side) to attach the blower fans to the toolhead (the top hole only)
 - Connect the blower fans to the splitter made in [the previous step](#6-part-cooling-fan-splitter)
