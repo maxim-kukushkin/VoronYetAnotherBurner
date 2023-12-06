@@ -205,9 +205,9 @@ Fit the LEDs into their respective slots as shown on the photo
 
 ### 9.5. Fit the front cover onto the toolhead
 - Slide the assembled part from the front onto the toolhead
-    - A slight push may be needed so that the ring fits the motor and fan fits the guides on the panel
-    - There's a small collision with teh motor wires, but they should have enought space to bend slightly
-    - Make sure that the LED wires with connector a guided through the respective hole in the panel
+    - A slight push may be needed so that the ring fits the motor and the fan fits the guides on the panel
+    - There's a small collision with the motor wires, but they should have enough space to bend slightly
+    - Make sure that the LED wires with the connector are guided through the respective hole in the panel
 - Use 4x M3x20 screws to fix the cover in place
 - Connect the LED strip to the respective connector of the printer
 

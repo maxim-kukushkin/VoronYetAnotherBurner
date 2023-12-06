@@ -14,13 +14,13 @@ The features of this solution are:
 - Support of LEDs (2x part highlight + 4x status LEDs at the top)
 - Usage of an existing extruder (BondTech LGX Lite)
 - Easy loading of the filament + good grip of the bowden tube (by the extruder itself)
-- Support of the toolhead breakout PCB (same PCBs as used in Stealthburner)
+- Support of the toolhead breakout PCBis (same PCBs as used in Stealthburner)
 - Support of ADXL345 accelerometer mounting
 - Doesn't interfere with KlickyProbe, so it can be used as normal with this toolhead
 
 ![Toolhead photo](docs/resources/ToolheadPhoto.jpg)
 
-The toolhead uses BondTech LGX Lite extruder and currently only supports Dragon High Flow hotend. It is also based on Stealhburner's X Frame mounts (so migration from Stealthburner should be more or less straightforward).
+The toolhead uses BondTech LGX Lite extruder and currently only supports Dragon High Flow hotend. It is also based on Stealthburner's X Frame mounts (so migration from Stealthburner should be more or less straightforward).
 
 ### Known drawbacks
 - Due to the size of the toolhead along X-axis there's a limit on the toolhead's travel in the front corners (Y=0) of the printer. Y-axis, for example, needs to be homed first in case the toolhead is positioned around Y=0
