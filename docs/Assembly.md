@@ -13,11 +13,11 @@
 #### 1.1.1. Print the files
 Start by printing the hot end cartridge parts from the respective [subdirectory](../ToPrint/DragonHF/stls) - **Advice:** use support touching build plate
 
-#### 1.1.2. Add heat inserts to the front part
-![HE cartridge front with heat inserts](resources/HE_cartridge_DragonHF_front.png)
+#### 1.1.2. Add heatset inserts to the front part
+![HE cartridge front with heatset inserts](resources/HE_cartridge_DragonHF_front.png)
 
-#### 1.1.3. Add heat inserts to the back part
-![HE cartridge back with heat inserts](resources/HE_cartridge_DragonHF_back.png)
+#### 1.1.3. Add heatset inserts to the back part
+![HE cartridge back with heatset inserts](resources/HE_cartridge_DragonHF_back.png)
 
 #### 1.1.4. Cut PTFE tube
 It needs need to be as precise as possible to 29.7mm length. An advice to use calipers to mark the length and a sharp knife to do a right-angle cut.
@@ -72,8 +72,8 @@ Now use 2x M3x50 screws to completely fix the cartridge
 ### 3.1 Print the bracket
 [PCB Bracket STL](../ToPrint/stls/PCB_Bracket.stl) - **Advice:** use support touching build plate
 
-### 3.2. Add heat inserts
-![PCB Bracket with heat inserts](resources/PCB_bracket.png)
+### 3.2. Add heatset inserts
+![PCB Bracket with heatset inserts](resources/PCB_bracket.png)
 
 ### 3.3. Attach the PCB
 Use 2x M3x6 screws to attach the PCB (sorry for OpenSCAD's rendering artifacts)
@@ -153,8 +153,8 @@ Most probably your Breakout PCB (at least LDO's one) comes with a single connect
 ### 7.1. Print the part
 [Drag Chain Holder STL](../ToPrint/stls/DragChainHolder.stl) - **Advice:** use support touching build plate
 
-### 7.2. Add heat inserts
-![Drag Chain Holder with heat inserts](resources/DragChainHolder.png)
+### 7.2. Add heatset inserts
+![Drag Chain Holder with heatset inserts](resources/DragChainHolder.png)
 
 ### 7.3 Attach the drag chain
 - Use 2x M3x8 to attach the drag chain holder to the toolhead
@@ -168,8 +168,8 @@ Most probably your Breakout PCB (at least LDO's one) comes with a single connect
 ### 8.1. Print the part
 [Top Cover STL](../ToPrint/stls/[a]_TopCover.stl) - **Advice:** use support touching build plate
 
-### 8.2. Add heat inserts 
-![Top Cover with heat inserts](resources/TopCover.png)
+### 8.2. Add heatset inserts 
+![Top Cover with heatset inserts](resources/TopCover.png)
 
 ### 8.3. Attach to the toolhead
 - Fit the top cover from the top, guiding the bowden tube and the extruder's lever throught the respective holes
