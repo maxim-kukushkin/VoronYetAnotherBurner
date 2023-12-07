@@ -57,6 +57,7 @@ function accelerometer_location() = [
 
 
 HE_cartridge_front(for_stl_export = true);
+//HE_cartridge_front(for_stl_export = false);
 
 module HE_cartridge_front(for_stl_export = false) {
     color(parts_color()) rotate([for_stl_export ? 90 : 0, 0, 0]) {
@@ -76,13 +77,13 @@ module HE_cartridge_front(for_stl_export = false) {
 
             _hotend_shaft();
             _hotend_holes();
-            _mounting_screw_holes();
+            _mounting_screw_holes(for_stl_export);
 
             _vent_shaft();
 
             _fan_mount_holes();
             _extruder_mount_holes();
-            _back_mount_screw_holes();
+            _back_mount_screw_holes(for_stl_export);
             _cooling_duct_mount_holes();
             _accelerometer_mount_holes();
 
@@ -103,17 +104,15 @@ module main_body() {
             }
 }
 
-module _mounting_screw_holes() {
+module _mounting_screw_holes(for_stl_export) {
     for (i = [-1, 1])
         translate([
             i * bottom_mount_screw_dist() / 2,
             -depth - eps,
             -bottom_mount_screw_z_offset() + HE_cartridge_top_offset()
         ])
-            rotate([-90, 0, 0]) {
-                cylinder(d = m3_screw_d(), h = depth + 2 * eps, $fn=30);
-                cylinder(d = m3_screw_cap_d(), h = m3_cap_h() - 0.3);
-            }
+            rotate([90, 0, 0])
+                m3_screw(depth + 2 * eps, no_support = for_stl_export, head_above = false);
 }
 
 module _hotend_holes() {
@@ -184,12 +183,10 @@ module HE_cartridge_front_for_each_extruder_mount_pos() {
             children();
 }
 
-module _back_mount_screw_holes() {
+module _back_mount_screw_holes(for_stl_export) {
     HE_cartridge_front_for_each_backmount_screw_pos()
-        rotate([-90, 0, 0]) {
-            cylinder(d = m3_screw_d(), h = depth + 2 * eps, $fn=30);
-            cylinder(d = m3_screw_cap_d(), h = m3_cap_h() - 0.3);
-        }
+        rotate([90, 0, 0])
+            m3_screw(depth + 2 * eps, no_support = for_stl_export, head_above = false);
 }
 
 module _cooling_duct_mount_holes() {

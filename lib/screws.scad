@@ -47,39 +47,56 @@ function m3_cap_h() = m3_screw_cap_h[0];
 function m3_washer_h() = m3_screw_cap_h[1];
 
 //-------------------------------------------------
+module mX_screw(screw_l, cap_h, screw_sizes, cap_sizes, with_washer, no_support, head_above) {
+    screw_d = screw_sizes[_for_cutting() ? 1 : 0];
+    cap_d = cap_sizes[_for_cutting() ? (with_washer ? 2 : 1): 0];
+    washer_h = cap_h[1];
 
-module mX_screw(cap_d, cap_h, screw_d, screw_l, washer_d = 0, washer_h = 0) {
-    if (washer_d != 0 && washer_h != 0) {
-        cylinder(d = washer_d, h = washer_h);
-        cylinder(d = cap_d, h = cap_h + washer_h);
-    } else 
-        cylinder(d = cap_d, h = cap_h);
-    
-    translate([0, 0, -screw_l])
+    cap_draw_h = cap_h[0] + (with_washer ? washer_h : 0);
+    translate([0, 0, head_above ? cap_draw_h : 0])
+        mX_cap_cut(cap_draw_h, cap_d, screw_d, no_support, eps)
+
+    // draw the actual washer if needed
+    if (with_washer && !_for_cutting())
+        cylinder(d = cap_sizes[2], h = washer_h);
+
+    // screw body
+    translate([0, 0, -screw_l - (head_above ? 0 : cap_draw_h)])
         cylinder(d = screw_d, h = screw_l + eps);
 }
 
-module mX_screw_(length, cap_h, screw_sizes, cap_sizes, with_washer) {
-    i = _for_cutting() ? 1 : 0;
-    if (with_washer)
-        mX_screw(cap_sizes[_for_cutting() ? 2 : 0], cap_h[0], screw_sizes[i], length, cap_sizes[2], cap_h[1]);
-    else
-        mX_screw(cap_sizes[i], cap_h[0], screw_sizes[i], length);
+
+module m2_screw(length, with_washer = false, no_support = false, head_above = true) {
+    mX_screw(length, m2_screw_cap_h, m2_screw_d, m2_screw_cap_d, with_washer, no_support, head_above);
 }
 
-module m2_screw(length, with_washer = false) {
-    mX_screw_(length, m2_screw_cap_h, m2_screw_d, m2_screw_cap_d, with_washer);
+module m3_screw(length, with_washer = false, no_support = false, head_above = true) {
+    mX_screw(length, m3_screw_cap_h, m3_screw_d, m3_screw_cap_d, with_washer, no_support, head_above);
 }
 
-module m3_screw(length, with_washer = false) {
-    mX_screw_(length, m3_screw_cap_h, m3_screw_d, m3_screw_cap_d, with_washer);
+module m4_screw(length, with_washer = false, no_support = false, head_above = true) {
+    mX_screw(length, m4_screw_cap_h, m4_screw_d, m4_screw_cap_d, with_washer, no_support, head_above);
 }
 
-module m4_screw(length, with_washer = false) {
-    mX_screw_(length, m4_screw_cap_h, m4_screw_d, m4_screw_cap_d, with_washer);
+module m2_5_screw(length, with_washer = false, no_support = false, head_above = true) {
+    mX_screw(length, m2_5_screw_cap_h, m2_5_screw_d, m2_5_screw_cap_d, with_washer, no_support, head_above);
 }
+ 
+module mX_cap_cut(h, outer_d, inner_d, no_support, eps) {
+    translate([0, 0, -h]) {
+        cylinder(d = outer_d, h = h + eps);
+        if (no_support) {
+            intersection() {
+                translate([0, 0, -0.2])
+                    cylinder(d = outer_d, h = 0.4 + eps);
+                
+                translate([0, 0, -0.1])
+                    cube([inner_d, outer_d, 0.2 + 2 * eps], center=true);
+            }
 
-module m2_5_screw(length, with_washer = false) {
-    mX_screw_(length, m2_5_screw_cap_h, m2_5_screw_d, m2_5_screw_cap_d, with_washer);
-}
+            translate([0, 0, -0.2])
+                cube([inner_d, inner_d, 0.4], center=true);
+        }
+    }
 
+}           

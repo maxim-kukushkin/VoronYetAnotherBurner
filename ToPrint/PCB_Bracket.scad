@@ -107,10 +107,8 @@ module _base() {
 
 module _mounting_screw_holes() {
     pcb_bracket_for_each_mounting_screw_pos()
-            rotate([-90, 0, 0]) {
-            cylinder(d = m3_screw_d(), h = pillar_l + 2 * eps);
-            cylinder(d = m3_screw_cap_d(), h = m3_cap_h() + 0.2);
-        }
+        rotate([90, 0, 0])
+            m3_screw(pillar_l + 2 * eps, head_above = false);
 }
 
 module _pcb_heat_insert_slots() {
@@ -156,18 +154,14 @@ module _carriage_mounting_pillars() {
 
 module _drag_chain_holder_mount_screws() {
     pcb_bracket_for_each_drag_chain_screw_pos()
-        rotate([-90, 0, 0]) {
-            cylinder(d = m3_screw_d(), h = pcb_bracket_backplate_thickness() + 2 * eps);
-            cylinder(d = m3_screw_cap_d(), h = m3_cap_h());
-        }
+        rotate([90, 0, 0])
+            m3_screw(pcb_bracket_backplate_thickness() + 2 * eps, head_above = false);
 }
 
 module _top_cover_mount_screws() {
     pcb_bracket_for_each_top_cover_mount_screw_pos()
-        rotate([0, -90, 0]) {
-            cylinder(d = m3_screw_d(), h = pcb_bracket_side_wall_thickness() + 2 * eps);
-            cylinder(d = m3_screw_cap_d(), h = m3_cap_h());
-        }
+        rotate([0, 90, 0])
+            m3_screw(pcb_bracket_side_wall_thickness() + 2 * eps, head_above = false);
 }
 
 module _right_blower_intake() {
