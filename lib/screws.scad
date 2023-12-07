@@ -54,7 +54,7 @@ module mX_screw(screw_l, cap_h, screw_sizes, cap_sizes, with_washer, no_support,
 
     cap_draw_h = cap_h[0] + (with_washer ? washer_h : 0);
     translate([0, 0, head_above ? cap_draw_h : 0])
-        mX_cap_cut(cap_draw_h, cap_d, screw_d, no_support, eps)
+        mX_head_cut(cap_draw_h, cap_d, screw_d, no_support, eps)
 
     // draw the actual washer if needed
     if (with_washer && !_for_cutting())
@@ -82,7 +82,7 @@ module m2_5_screw(length, with_washer = false, no_support = false, head_above = 
     mX_screw(length, m2_5_screw_cap_h, m2_5_screw_d, m2_5_screw_cap_d, with_washer, no_support, head_above);
 }
  
-module mX_cap_cut(h, outer_d, inner_d, no_support, eps) {
+module mX_head_cut(h, outer_d, inner_d, no_support, eps) {
     translate([0, 0, -h]) {
         cylinder(d = outer_d, h = h + eps);
         if (no_support) {
@@ -98,5 +98,4 @@ module mX_cap_cut(h, outer_d, inner_d, no_support, eps) {
                 cube([inner_d, inner_d, 0.4], center=true);
         }
     }
-
 }           

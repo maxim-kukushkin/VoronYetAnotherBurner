@@ -11,7 +11,7 @@
 ### 1.1. Dragon High Flow
 
 #### 1.1.1. Print the files
-Start by printing the hot end cartridge parts from the respective [subdirectory](../ToPrint/DragonHF/stls) - **Advice:** use support touching build plate
+Start by printing the hot end cartridge parts from the respective [subdirectory](../ToPrint/DragonHF/stls)
 
 #### 1.1.2. Add heatset inserts to the front part
 ![HE cartridge front with heatset inserts](resources/HE_cartridge_DragonHF_front.png)

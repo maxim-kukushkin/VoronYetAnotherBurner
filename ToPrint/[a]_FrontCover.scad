@@ -48,6 +48,7 @@ led_housing_outer_r = total_depth - abs(cartridge_front_y);
 led_housing_inner_r = led_housing_outer_r - 2;
 
 FrontCover(for_stl_export = true);
+//FrontCover(for_stl_export = false);
 
 module FrontCover(for_stl_export = false) {
     color(cover_color()) {
@@ -66,8 +67,8 @@ module FrontCover(for_stl_export = false) {
                 _wire_guides();
             }
 
-            _bottom_mounting_screws();
-            _top_screw_cuts();
+            _bottom_mounting_screws(for_stl_export);
+            _top_screw_cuts(for_stl_export);
             _led_wire_hole();
             _right_blower_intake();
         }
@@ -159,12 +160,10 @@ module _front_panel() {
         }
 }
 
-module _bottom_mounting_screws() {
+module _bottom_mounting_screws(for_stl_export) {
     front_cover_for_each_bottom_screw_pos()
-        rotate([-90, 0, 0]) {
-            cylinder(d = m3_screw_d(), h = front_wall + 2 * eps);
-            cylinder(d = m3_screw_cap_d(), h = eps + m3_cap_h());
-        }
+       rotate([90, 0, 0])
+            m3_screw(front_wall + 2 * eps, no_support = for_stl_export, head_above = false); 
 }
 
 module _top_screw_shafts() {
@@ -190,14 +189,12 @@ module _top_screw_shafts() {
             }
 }
 
-module _top_screw_cuts() {
-    front_cover_for_each_top_screw_pos() {
-        rotate([-90, 0, 0])
-            cylinder(d = m3_screw_d(), h = total_depth);
-        translate([0, eps, 0])
-            rotate([90, 0, 0])
-                cylinder(d = m3_screw_cap_d(), h = total_depth);
-    }
+module _top_screw_cuts(for_stl_export) {
+    front_cover_for_each_top_screw_pos()
+        rotate([90, 0, 0]) {
+            m3_screw(total_depth, no_support = for_stl_export);
+            cylinder(d = m3_screw_cap_d(), h = total_depth);
+        }
 }
 
 
