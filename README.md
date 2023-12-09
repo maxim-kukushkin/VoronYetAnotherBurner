@@ -32,6 +32,36 @@ See the [BOM document](docs/BOM.md)
 ## Assembly
 See the [Assembly manual](docs/Assembly.md)
 
+## Klipper settings
+
+The following Klipper settings are recommended for usage of this toolhead.
+
+The settings listed here indicate what needs to be adjusted, it's not the complete config. So use it as a reference, don't Ctrl-C/Ctrl-V.
+
+### `printer.cfg`
+```
+[extruder]
+rotation_distance: 5.69395   # Bondtech 5mm Drive Gears
+microsteps: 16
+full_steps_per_rotation: 200 # 200 for 1.8 degree, 400 for 0.9 degree
+
+[probe]
+x_offset: 0
+y_offset: 19.75
+z_offset: 6.39 # !! starter point, this needs to be further adjusted for each individual build
+
+[neopixel headlight]
+chain_count: 6
+color_order: GRB
+```
+
+### `stealthburner_leds.cfg`
+```
+[gcode_macro _sb_vars]
+variable_logo_idex: "1,2,5,6"
+variable_nozzle_idx: "3,4"
+```
+
 ## Development
 The OpenSCAD models included as source files rely on [NopSCADlib](https://github.com/nophead/NopSCADlib). In order to be able to open them and render the model in OpenSCAD one needs to install it first.
 
